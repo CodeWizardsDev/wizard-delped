@@ -42,12 +42,12 @@
  ```
 
   ## EXAMPLE
-  -Delete All Peds Withing 100.0:
+  - Delete All Peds Withing 100.0:
   ```lua
   exports['wizard-delped']:DeletePeds(100.0, false)
   ```
 
-  -Delete Dead Peds Withing 100.0:
+  - Delete Dead Peds Withing 100.0:
   ```lua
   exports['wizard-delped']:DeletePeds(100.0, false)
   ```
