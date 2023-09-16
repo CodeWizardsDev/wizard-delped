@@ -142,7 +142,6 @@ function DeletePeds(exportdis, exportdead)
                     DeleteNearestPed(ped, confretry)
                 end
             end
-            loop = false
         end
     end)
 end
