@@ -135,33 +135,43 @@ local function DoLoop(dis)
     end)
 end
 
-function DeletePeds(exportdis, exportdead)
+function DeletePeds(exporttries, exportdis, exporttype, pos)
+    if exporttries == 'none' then exporttries = confretry end
+    if exportdis == 'none' then exportdis = confdistance end
+    if exporttype == 'none' then if deadonly then exporttype == 'dead' elseif not deadonly and delwalking then exporttype == 'walking' elseif not deadonly and deldriver then exporttype == 'driving' elseif not deadonly and not delwalking and not deldriving then exporttype == 'all' end end
+    if pos then playerPed = GetPlayerPed(-1) pos = GetEntityCoords(playerPed) end
     Citizen.CreateThread(function()
-        local playerPed = GetPlayerPed(-1)
 
-        if DoesEntityExist(playerPed) and IsPedOnFoot(playerPed) then
-            local pos = GetEntityCoords(playerPed)
-            local nearbyPeds = GetNearbyPeds(pos, exportdis)
+        local nearbyPeds = GetNearbyPeds(pos, exportdis)
 
-            for _, ped in ipairs(nearbyPeds) do
-                if exportdead then
-                    if IsPedDeadOrDying(ped) then
-                        DeleteNearestPed(ped, confretry)
-                    end
-                else
-                    DeleteNearestPed(ped, confretry)
+        for _, ped in ipairs(nearbyPeds) do
+            if exporttype == 'dead' then
+                if IsPedDeadOrDying(ped) then
+                    DeleteNearestPed(ped, exporttries)
+                end
+            elseif exporttype == 'all' then
+                DeleteNearestPed(ped, exporttries)
+            elseif exporttype == 'walking' then
+                if IsPedOnFoot(ped) then
+                    DeleteNearestPed(ped, exporttries)
+                end
+            elseif exporttype == 'driving' then
+                if IsPedInAnyVehicle(ped) then
+                    DeleteNearestPed(ped, exporttries)
                 end
             end
-            loop = false
         end
     end)
 end
 
 RegisterNetEvent('wizard-delped:DeletePeds')
-AddEventHandler('wizard-delped:DeletePeds', function(exportdis, exportdead)
-	DeletePeds(exportdis, exportdead)
+AddEventHandler('wizard-delped:DeletePeds', function(exporttries, exportdis, exporttype, pos)
+	DeletePeds(exporttries, exportdis, exporttype, pos)
 end)
 
+RegisterCommand('testped', function(source, args, rawCommand)
+    exports['wizard-delped']:DeletePeds(5, 15.0, 'all', vector3(789.85, -1765.84, 29.68))
+end)
 
 RegisterCommand(Config.Command, function(source, args, rawCommand)
     local playerId = source
