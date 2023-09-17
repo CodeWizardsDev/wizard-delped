@@ -138,7 +138,7 @@ end
 function DeletePeds(exporttries, exportdis, exporttype, pos)
     if exporttries == 'none' then exporttries = confretry end
     if exportdis == 'none' then exportdis = confdistance end
-    if exporttype == 'none' then if deadonly then exporttype == 'dead' elseif not deadonly and delwalking then exporttype == 'walking' elseif not deadonly and deldriver then exporttype == 'driving' elseif not deadonly and not delwalking and not deldriving then exporttype == 'all' end end
+    if exporttype == 'none' then if deadonly then exporttype = 'dead' elseif not deadonly and delwalking then exporttype = 'walking' elseif not deadonly and deldriver then exporttype = 'driving' elseif not deadonly and not delwalking and not deldriving then exporttype = 'all' end end
     if pos then playerPed = GetPlayerPed(-1) pos = GetEntityCoords(playerPed) end
     Citizen.CreateThread(function()
 
