@@ -17,6 +17,7 @@
 - ⛔ Customizable Command Permissions
 - ⏱️ Customizable Command CoolDown With Timer
 - 🎚️ Customizable Command Dead/All NPC Delete
+- 🎚️ Customizable Command Driver/Walking/All NPC Delete (ONLY IF DEAD IS FALSE)
 - 🗺️ Customizable Default Distance (YOU CAN ALSO ENTER DISTANCE IN COMMAND, THIS IS FOR NO COMMAND DISTANCE INPUT)
 - ➰ Customizable Retry Amount
 - ‼️ Customizable Notify System ('StandAlone', 'QBCore', 'Esx', 'OkOk', 'Ox')
