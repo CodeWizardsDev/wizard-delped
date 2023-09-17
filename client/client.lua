@@ -10,6 +10,8 @@ local confdistance = Config.Distance or 100.0
 local confretry = Config.Retry or 3
 
 local deadonly = Config.DeadOnly == true
+local delwalking = Config.DelWalking == true
+local deldriver = Config.DelDriver == true
 local breaknotif = false
 local cooldowns = {}
 
@@ -98,7 +100,15 @@ local function Delete(dis2)
                     DeleteNearestPed(ped, confretry)
                 end
             else
-                DeleteNearestPed(ped, confretry)
+                if delwalking then
+                    if IsPedOnFoot(ped) then
+                        DeleteNearestPed(ped, confretry)
+                    end
+                elseif deldriver then
+                    if IsPedInAnyVehicle(ped, true) then
+                        DeleteNearestPed(ped, confretry)
+                    end
+                end
             end
         end
 
@@ -142,6 +152,7 @@ function DeletePeds(exportdis, exportdead)
                     DeleteNearestPed(ped, confretry)
                 end
             end
+            loop = false
         end
     end)
 end
